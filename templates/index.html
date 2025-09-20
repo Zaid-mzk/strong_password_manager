@@ -2,136 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strong Password Manager</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #64b5f6;
-        }
-
-        input, button {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: none;
-        }
-
-        button {
-            cursor: pointer;
-            background-color: #64b5f6;
-            color: #fff;
-        }
-
-        .message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        /* Modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-        }
-
-        .modal-content {
-            background-color: #1e1e1e;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            color: #f5f5f5;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        }
-
-        .modal .close {
-            color: #aaa;
-            float: right;
-            font-size: 22px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .modal .close:hover {
-            color: #64b5f6;
-        }
-
-        ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-    </style>
+    <title>Z+ Password Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Strong Password Manager</h1>
+    <div class="main-wrapper">
+        <h1>Z+ Password Manager</h1>
+        <p class="tagline">Secure your digital life</p>
 
-    <form method="POST">
-        <input type="text" id="passwordInput" name="password" placeholder="Enter password to check" value="{{ password }}">
-        <br>
-        <button type="submit" name="action" value="generate">Generate Password</button>
-        <button type="submit" name="action" value="check">Check Strength</button>
-        <button type="submit" name="action" value="guidelines">Show Guidelines</button>
-    </form>
+        <div class="container">
+            <form method="POST">
+                <div class="input-wrapper">
+                    <input type="text" name="password" id="passwordInput" value="{{ password }}" placeholder="Enter or generate password">
+                    <span class="copy-icon" onclick="copyPassword()" title="Copy to clipboard">
+                        <i class="fa-solid fa-copy"></i>
+                    </span>
+                </div>
 
-    {% if message %}
-        <div class="message">{{ message }}</div>
-    {% endif %}
+                <div class="btn-group">
+                    <button class="generate-btn" name="action" value="generate">
+                        <i class="fa-solid fa-lock"></i> Generate
+                    </button>
+                    <button class="check-btn" name="action" value="check">
+                        <i class="fa-solid fa-shield-halved"></i> Check Strength
+                    </button>
+                    <button class="guide-btn" name="action" value="guidelines">
+                        <i class="fa-solid fa-book"></i> Guidelines
+                    </button>
+                </div>
+            </form>
 
-    {% if issues %}
-        <ul>
-        {% for issue in issues %}
-            <li>{{ issue }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+            <div class="message">{{ message }}</div>
 
-    <button onclick="copyPassword()">Copy Password</button>
+            {% if issues %}
+            <div class="issues">
+                <ul>
+                    {% for issue in issues %}
+                        <li>⚠️ {{ issue }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
 
-    <!-- Guidelines Modal -->
-    <div id="guidelinesModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <pre id="guidelinesText">{{ guidelines_text or "" }}</pre>
+            <div class="footer-note">
+                Made by <span>Zaid Khan</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // Modal logic
-        const modal = document.getElementById("guidelinesModal");
-        const closeBtn = document.getElementsByClassName("close")[0];
-
-        const showModal = {{ 'true' if show_modal else 'false' }};
-        if(showModal) modal.style.display = "block";
-
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) modal.style.display = "none";
-        }
-
-        // Copy password function
         function copyPassword() {
             const input = document.getElementById("passwordInput");
-            if(input && input.value) {
+            if (input.value) {
                 navigator.clipboard.writeText(input.value);
                 alert("Password copied to clipboard!");
             } else {

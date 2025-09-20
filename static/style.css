@@ -1,35 +1,155 @@
-/* Modal styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
+/* Global */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Wrapper */
+.main-wrapper {
+    text-align: center;
     width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.6);
-}
-
-.modal-content {
-    background-color: #1e1e1e;
-    margin: 10% auto;
+    max-width: 550px;
     padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
+}
+
+/* Title */
+h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+/* Tagline */
+.tagline {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 25px;
+}
+
+/* Card Container */
+.container {
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+/* Input wrapper with copy */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px 45px 14px 14px;
+    font-size: 16px;
+    border: 1.5px solid #333;
+    border-radius: 8px;
+    text-align: center;
+    background: #2b2b2b;
     color: #f5f5f5;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    outline: none;
+    box-sizing: border-box;
+    transition: border 0.2s ease;
 }
 
-.modal .close {
-    color: #aaa;
-    float: right;
-    font-size: 22px;
-    font-weight: bold;
+input[type="text"]:focus {
+    border-color: #64b5f6;
+}
+
+.copy-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
+    color: #aaa;
+    font-size: 18px;
+}
+.copy-icon:hover {
+    color: #64b5f6;
 }
 
-.modal .close:hover {
+/* Buttons */
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #fff;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.05);
+    transition: transform 0.1s ease, background 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* Specific button colors (overlay on dark) */
+.generate-btn {
+    background: linear-gradient(145deg, #43a047, #2e7d32);
+}
+.check-btn {
+    background: linear-gradient(145deg, #1e88e5, #1565c0);
+}
+.guide-btn {
+    background: linear-gradient(145deg, #f57c00, #e65100);
+}
+
+/* Messages */
+.message {
+    margin-top: 18px;
+    font-weight: bold;
+    color: #81c784;
+}
+
+.issues {
+    color: #ef5350;
+    margin-top: 15px;
+    text-align: left;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 6px 0;
+}
+
+/* Footer inside card */
+.footer-note {
+    margin-top: 30px;
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid #333;
+    padding-top: 12px;
+}
+.footer-note span {
     color: #64b5f6;
+    font-weight: 600;
 }
