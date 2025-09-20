@@ -28,23 +28,6 @@ This project supports multiple modes:
 - **Tkinter GUI:** Offline desktop app, beginner-friendly.
 - **Flask Web App:** Dark-themed, responsive, and deployable to **Vercel** for online access.
 
----
-
-## 📂 Project Structure
-
-Z+ Password Manager/
-├── main.py              # CLI tool
-├── gui_tkinter.py       # Tkinter desktop GUI
-├── app.py               # Flask web app
-├── templates/
-│   └── index.html       # Web UI template
-├── static/
-│   └── style.css        # Web UI styling
-├── vercel.json          # Vercel deployment config
-├── requirements.txt     # Python dependencies
-└── README.md            # Documentation
-
----
 
 ## ⚡ Installation & Local Usage
 
