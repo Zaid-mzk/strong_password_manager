@@ -1,0 +1,38 @@
+<!-- Guidelines Modal -->
+<div id="guidelinesModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <pre id="guidelinesText">{{ guidelines_text }}</pre>
+    </div>
+</div>
+
+<script>
+    // Modal logic
+    const modal = document.getElementById("guidelinesModal");
+    const closeBtn = document.getElementsByClassName("close")[0];
+
+    {% if show_modal %}
+        modal.style.display = "block";
+    {% endif %}
+
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Copy password function
+    function copyPassword() {
+        const input = document.getElementById("passwordInput");
+        if (input.value) {
+            navigator.clipboard.writeText(input.value);
+            alert("Password copied to clipboard!");
+        } else {
+            alert("No password to copy.");
+        }
+    }
+</script>
