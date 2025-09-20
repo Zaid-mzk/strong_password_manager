@@ -1,38 +1,143 @@
-<!-- Guidelines Modal -->
-<div id="guidelinesModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <pre id="guidelinesText">{{ guidelines_text }}</pre>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strong Password Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-<script>
-    // Modal logic
-    const modal = document.getElementById("guidelinesModal");
-    const closeBtn = document.getElementsByClassName("close")[0];
+        h1 {
+            color: #64b5f6;
+        }
 
-    {% if show_modal %}
-        modal.style.display = "block";
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #64b5f6;
+            color: #fff;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            color: #f5f5f5;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .modal .close {
+            color: #aaa;
+            float: right;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal .close:hover {
+            color: #64b5f6;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Strong Password Manager</h1>
+
+    <form method="POST">
+        <input type="text" id="passwordInput" name="password" placeholder="Enter password to check" value="{{ password }}">
+        <br>
+        <button type="submit" name="action" value="generate">Generate Password</button>
+        <button type="submit" name="action" value="check">Check Strength</button>
+        <button type="submit" name="action" value="guidelines">Show Guidelines</button>
+    </form>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
     {% endif %}
 
-    closeBtn.onclick = function() {
-        modal.style.display = "none";
-    }
+    {% if issues %}
+        <ul>
+        {% for issue in issues %}
+            <li>{{ issue }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
+    <button onclick="copyPassword()">Copy Password</button>
+
+    <!-- Guidelines Modal -->
+    <div id="guidelinesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <pre id="guidelinesText">{{ guidelines_text or "" }}</pre>
+        </div>
+    </div>
+
+    <script>
+        // Modal logic
+        const modal = document.getElementById("guidelinesModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+
+        const showModal = {{ 'true' if show_modal else 'false' }};
+        if(showModal) modal.style.display = "block";
+
+        closeBtn.onclick = function() {
             modal.style.display = "none";
         }
-    }
 
-    // Copy password function
-    function copyPassword() {
-        const input = document.getElementById("passwordInput");
-        if (input.value) {
-            navigator.clipboard.writeText(input.value);
-            alert("Password copied to clipboard!");
-        } else {
-            alert("No password to copy.");
+        window.onclick = function(event) {
+            if (event.target == modal) modal.style.display = "none";
         }
-    }
-</script>
+
+        // Copy password function
+        function copyPassword() {
+            const input = document.getElementById("passwordInput");
+            if(input && input.value) {
+                navigator.clipboard.writeText(input.value);
+                alert("Password copied to clipboard!");
+            } else {
+                alert("No password to copy.");
+            }
+        }
+    </script>
+</body>
+</html>
